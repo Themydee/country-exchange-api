@@ -57,15 +57,17 @@ async function startServer() {
     // Initialize database tables
     await initializeDatabase();
 
-    // Start server
-    app.listen(PORT, () => {
-      console.log(`
+   // Start server
+const HOST = '0.0.0.0'; // Allow external connections
+
+app.listen(PORT, HOST, () => {
+  console.log(`
 ╔══════════════════════════════════════════════════════╗
 ║                                                      ║
 ║   🚀 Country Currency & Exchange API                ║
 ║                                                      ║
-║   Server running on port: ${PORT.toString().padEnd(27)} ║
-║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(35)} ║
+║   Server running on http://${HOST}:${PORT.toString().padEnd(27)}║
+║   Environment: ${(process.env.NODE_ENV || 'development').padEnd(35)}║
 ║                                                      ║
 ║   📡 Endpoints:                                      ║
 ║   - POST /countries/refresh                          ║
@@ -76,8 +78,9 @@ async function startServer() {
 ║   - GET  /countries/image                            ║
 ║                                                      ║
 ╚══════════════════════════════════════════════════════╝
-      `);
-    });
+  `);
+});
+
   } catch (error) {
     console.error('❌ Failed to start server:', error.message);
     process.exit(1);
